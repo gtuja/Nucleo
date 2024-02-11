@@ -1,22 +1,10 @@
-The 'Blinky' project is a simple demo program for
-ST 'STM32L053R0' microcontroller using ST 'Nucleo-L053R8' Evaluation Board.
-Compliant to Cortex Microcontroller Software Interface Standard (CMSIS).
+# There is some bug in sample project.
 
-Example functionality:
- - Clock Settings:
-   - XTAL    = HSI     = 16.00 MHz
-   - SYSCLK  =           32.00 MHz
+Patch with the file below.
+./_Patch/rtx_core_cm.h
+* Do not copy it, should check differences with same file already installed.
+* You can see it with #ifdef __PATCH_240211_SEO
 
- - one LED blinks
- - blinking is paused while holding down the USER button.
-
-
-The Blinky program is available in different targets:
- - Debug:
-   - Compiler optimization Level 1
-   - Enabled Event Recorder
-   - Keil RTX5 variant 'Source'
- - Release:
-   - Compiler optimization Level 3
-   - Keil RTX5 variant 'Library'
+C:/Users/User/AppData/Local/Arm/Packs/ARM/CMSIS-RTX/5.8.0/Source
+* It might be different as as installation of Keil uVision.
 
