@@ -16,8 +16,8 @@
   ******************************************************************************
   */
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef INC_SERVICE_TIMBASE_H_
-#define INC_SERVICE_TIMBASE_H_
+#ifndef INC_SERVICE_LED_H_
+#define INC_SERVICE_LED_H_
 
 #ifdef __cplusplus
 extern "C" {
@@ -28,17 +28,16 @@ extern "C" {
 /* Exported types ------------------------------------------------------------*/
 
 /* Exported constants --------------------------------------------------------*/
-#define TIM_BASE_PWM_PRD (uint16_t)41940  /* 10ms */
+#define LED_PWM_PRD (uint16_t)4193  /* 1ms */
 
 /* Exported macro ------------------------------------------------------------*/
 
 /* Exported functions prototypes ---------------------------------------------*/
-void vidTimBaseInitialize(void);
-uint32_t u32TimBaseGetCounter(void);
+extern void vidSrvLedInitialize(void);
+extern void vidSrvLedProcess(void* args);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* INC_SERVICE_TIMBASE_H_ */
-
+#endif /* INC_SERVICE_LED_H_ */

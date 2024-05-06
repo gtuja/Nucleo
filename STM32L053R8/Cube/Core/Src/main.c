@@ -18,10 +18,11 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-#include "Service\TimBase.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "Service/TimBase.h"
+#include "Service/Led.h"
 
 /* USER CODE END Includes */
 
@@ -55,36 +56,10 @@ static void MX_TIM2_Init(void);
 static void MX_TIM21_Init(void);
 /* USER CODE BEGIN PFP */
 
-static void vidLedControl(void);
-
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
-void vidLedControl()
-{
-  HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_1);
-  int count = 0, max_step = 99, nagative_flag = 0;
-  while(1)
-  {
-    if(count > max_step)
-    {
-      nagative_flag = 1;
-      count = max_step;
-    }
-    else if(count < 0)
-    {
-      nagative_flag = 0;
-      count = 0;
-    }
-    if(nagative_flag) count--;
-    else count++;
-
-    __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_1, count);
-    HAL_Delay(10);
-  }
-}
 
 /* USER CODE END 0 */
 
@@ -121,6 +96,7 @@ int main(void)
   MX_TIM21_Init();
   /* USER CODE BEGIN 2 */
   vidTimBaseInitialize();
+  vidSrvLedInitialize();
 
   /* USER CODE END 2 */
 
@@ -129,9 +105,7 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-
     /* USER CODE BEGIN 3 */
-    vidLedControl();
   }
   /* USER CODE END 3 */
 }
@@ -197,9 +171,9 @@ static void MX_TIM2_Init(void)
 
   /* USER CODE END TIM2_Init 1 */
   htim2.Instance = TIM2;
-  htim2.Init.Prescaler = 419;
+  htim2.Init.Prescaler = 0;
   htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim2.Init.Period = 99;
+  htim2.Init.Period = 4193;
   htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   if (HAL_TIM_Base_Init(&htim2) != HAL_OK)
@@ -255,9 +229,9 @@ static void MX_TIM21_Init(void)
 
   /* USER CODE END TIM21_Init 1 */
   htim21.Instance = TIM21;
-  htim21.Init.Prescaler = 419;
+  htim21.Init.Prescaler = 0;
   htim21.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim21.Init.Period = 9;
+  htim21.Init.Period = 41939;
   htim21.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim21.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   if (HAL_TIM_Base_Init(&htim21) != HAL_OK)
