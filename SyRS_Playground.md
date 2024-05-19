@@ -1,7 +1,9 @@
 [SyRS_001][Heading]
 # Overview
+
 [SyRS_002][ReqInformation]
 NPA(Nucleo Playground Application) is an application that provides features,i.e., button LED control.
+
 [SyRS_003][Heading]
 # Environment
 [SyRS_004][ReqFunctional]
