@@ -6,16 +6,22 @@ NPA(Nucleo Playground Application) is an application that provides features,i.e.
 
 [SyRS_003][Heading]
 # Environment
+
 [SyRS_004][ReqFunctional]
 NPA shall run on the EVB(Evaluation Board), nucleo-f429ZI.
+
 [SyRS_005][ReqFunctional]
 NPA shall be implemented with CubeIDE version 1.51 provided by ST.
+
 [SyRS_006][ReqFunctional]
 NPA shall implement features with 1 button and 3 LEDs on the EVB.
+
 [SyRS_007][Heading]
 # Features
+
 [SyRS_008][Heading]
 ## LED Control
+
 [SyRS_009][ReqFunctional]
 
 ## Button Control
