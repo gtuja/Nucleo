@@ -16,9 +16,6 @@ NPA shall be implemented with CubeIDE version 1.51 provided by ST.
 [SyRS_007][Heading]
 # Features
 
-[SyRS_008][Heading]
-## LED Control
-
 [SyRS_009][Heading]
 
 ## GSML
@@ -27,10 +24,25 @@ NPA shall be implemented with CubeIDE version 1.51 provided by ST.
 GSML(G? State Machine Library) is to provide state control for components, e.g., button, LED.
 
 [SyRS_xxx][ReqFunctional]
-GSML is platform independent library written in portable language, C language.
+GSML is platform independent library written in portable language, C.
 
 [SyRS_xxx][ReqFunctional]
-GSML 
+GSML is composed of modules below.
+- GSML_COMMON
+- GSML_Template
+- GSML_Button
+- GSML_XXX
+
+[SyRS_xxx][ReqFunctional]
+GSML_COMMON shall define and implement common features below.
+- Enum type of state functions, i.e., entry, do, exit.
+- Debug feature to evaluate GSML.
+
+[SyRS_xxx][ReqFunctional]
+GSML_Template shall provide a template code for futher modules, GSML_xxx.
+
+[SyRS_xxx][ReqFunctional]
+GSML_Template shall provide a template code for futher modules, GSML_xxx.
 
 [SyRS_xxx][ReqFunctional]
 GSML is composed of GSML_xxx, e.g, GSML_Button, GSML_Led.
