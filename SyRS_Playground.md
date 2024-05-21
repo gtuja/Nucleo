@@ -2,19 +2,16 @@
 # Overview
 
 [SyRS_002][ReqInformation]
-NPA(Nucleo Playground Application) is an application that provides features,i.e., button LED control.
+NPA(Nucleo Playground Application) is an application that provides control features for components, e.g.,buttons, LEDs.
 
 [SyRS_003][Heading]
 # Environment
 
 [SyRS_004][ReqFunctional]
-NPA shall run on the EVB(Evaluation Board), nucleo-f429ZI.
+NPA shall run on the EVB(Evaluation Board), e.g., nucleo-f429ZI.
 
 [SyRS_005][ReqFunctional]
 NPA shall be implemented with CubeIDE version 1.51 provided by ST.
-
-[SyRS_006][ReqFunctional]
-NPA shall implement features with 1 button and 3 LEDs on the EVB.
 
 [SyRS_007][Heading]
 # Features
@@ -24,7 +21,21 @@ NPA shall implement features with 1 button and 3 LEDs on the EVB.
 
 [SyRS_009][Heading]
 
-## Button Control
+## GSML
+
+[SyRS_xxx][ReqFunctional]
+GSML(G? State Machine Library) is to provide state control for components, e.g., button, LED.
+
+[SyRS_xxx][ReqFunctional]
+GSML is platform independent library written in portable language, C language.
+
+[SyRS_xxx][ReqFunctional]
+GSML 
+
+[SyRS_xxx][ReqFunctional]
+GSML is composed of GSML_xxx, e.g, GSML_Button, GSML_Led.
+
+
 
 [SyRS_010][ReqFunctional]
 NPA shall define button states below
