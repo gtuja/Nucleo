@@ -19,6 +19,7 @@
 #include "stm32l0xx_hal.h"
 #include "Service/TimBase.h"
 #include "Service/Led.h"
+#include <stdio.h>
 
 typedef enum {
   SRV_NAME_LED = 0,
@@ -52,7 +53,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
   /* NOTE : This function should not be modified, when the callback is needed,
             the HAL_TIM_PeriodElapsedCallback could be implemented in the user file
    */
-  if (htim->Instance == htim21.Instance)
+  if (htim->Instance == TIM21)
   {
     vidTimBaseProcess();
   }
