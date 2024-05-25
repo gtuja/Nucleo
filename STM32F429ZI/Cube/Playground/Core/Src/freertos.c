@@ -25,6 +25,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include <stdio.h>
 
 /* USER CODE END Includes */
 
@@ -45,6 +46,8 @@
 
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN Variables */
+uint32_t gulTickCounter;
+uint32_t gulTaskBtnCounter;
 
 /* USER CODE END Variables */
 /* Definitions for TSK_BUTTON */
@@ -61,6 +64,13 @@ const osThreadAttr_t TSK_LED_attributes = {
   .stack_size = 1024 * 4,
   .priority = (osPriority_t) osPriorityNormal,
 };
+/* Definitions for TSK_SWD */
+osThreadId_t TSK_SWDHandle;
+const osThreadAttr_t TSK_SWD_attributes = {
+  .name = "TSK_SWD",
+  .stack_size = 1024 * 4,
+  .priority = (osPriority_t) osPriorityLow,
+};
 /* Definitions for SemStatusButton */
 osSemaphoreId_t SemStatusButtonHandle;
 const osSemaphoreAttr_t SemStatusButton_attributes = {
@@ -74,6 +84,7 @@ const osSemaphoreAttr_t SemStatusButton_attributes = {
 
 void TaskButton(void *argument);
 void TaskLed(void *argument);
+void TaskSwd(void *argument);
 
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
@@ -104,6 +115,8 @@ void vApplicationTickHook( void )
    added here, but the tick hook is called from an interrupt context, so
    code must not attempt to block, and only the interrupt safe FreeRTOS API
    functions can be used (those that end in FromISR()). */
+
+  gulTickCounter++;
 }
 /* USER CODE END 3 */
 
@@ -114,6 +127,7 @@ void vApplicationTickHook( void )
   */
 void MX_FREERTOS_Init(void) {
   /* USER CODE BEGIN Init */
+  gulTickCounter = 0;
 
   /* USER CODE END Init */
 
@@ -144,6 +158,9 @@ void MX_FREERTOS_Init(void) {
   /* creation of TSK_LED */
   TSK_LEDHandle = osThreadNew(TaskLed, NULL, &TSK_LED_attributes);
 
+  /* creation of TSK_SWD */
+  TSK_SWDHandle = osThreadNew(TaskSwd, NULL, &TSK_SWD_attributes);
+
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
   /* USER CODE END RTOS_THREADS */
@@ -164,9 +181,16 @@ void MX_FREERTOS_Init(void) {
 void TaskButton(void *argument)
 {
   /* USER CODE BEGIN TaskButton */
+  gulTaskBtnCounter = 0;
+
   /* Infinite loop */
   for(;;)
   {
+    if (gulTaskBtnCounter % 1000 == 0)
+    {
+      printf("%ld\r\n", gulTaskBtnCounter);
+    }
+    gulTaskBtnCounter++;
     osDelay(1);
   }
   /* USER CODE END TaskButton */
@@ -188,6 +212,24 @@ void TaskLed(void *argument)
     osDelay(1);
   }
   /* USER CODE END TaskLed */
+}
+
+/* USER CODE BEGIN Header_TaskSwd */
+/**
+* @brief Function implementing the TSK_SWD thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_TaskSwd */
+void TaskSwd(void *argument)
+{
+  /* USER CODE BEGIN TaskSwd */
+  /* Infinite loop */
+  for(;;)
+  {
+    osDelay(1);
+  }
+  /* USER CODE END TaskSwd */
 }
 
 /* Private application code --------------------------------------------------*/
