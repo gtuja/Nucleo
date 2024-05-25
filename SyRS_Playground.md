@@ -1,101 +1,43 @@
-[SyRS_001][Heading]
-# Overview
 
-[SyRS_002][ReqInformation]
-NPA(Nucleo Playground Application) is an application that provides control features for components, e.g.,buttons, LEDs.
+# List of abbreviation
+- GSL G? Static Library
+- NPA Nucleo Playground Application
+- STM ST Microcontroller
+- IDE Integrated Development Environment
+- GSL.SML GSL State Machine Library
+- HLD High Level Design
 
-[SyRS_003][Heading]
-# Environment
+# 1. preface
+- GSL is a collection of static libraries for general purpose written in C language.
+- NPA is a collection of applications run on STM.
+- NPA shall evaluate GSL and might play a role as a template application using GSL.
 
-[SyRS_004][ReqFunctional]
-NPA shall run on the EVB(Evaluation Board), e.g., nucleo-f429ZI.
+# 2. Environment
+- NPA shall run on the STM, e.g., nucleo-f429ZI, nucleo-l053r8.
+- NPA shall be implemented with CubeIDE version 1.51 provided by STM.
 
-[SyRS_005][ReqFunctional]
-NPA shall be implemented with CubeIDE version 1.51 provided by ST.
+# 3. Restrictions
+- Feature specific restrictions, e.g., clocks, ROM, RAM, shall be defined during evaluation phase.
 
-[SyRS_007][Heading]
-# Features
+# 4. Project Structures
+- Root
+   GSL
+   nucleo-l053r8
+   nucleo-f429ZI
 
-[SyRS_xxx][Heading]
-## GSML
+# 5. Features
+## 5.1. GSL
+- GSL is comprised of of modular libraries, e.g, SML, etc.
+- GSL shall provide closed processes, e.g., state control, to application.
+### 5.1. GSL.SML
+#### 5.1.1. Overall
+- SML shall provide state control to applications with same states.
+#### 5.1.2. HLD
 
-[SyRS_xxx][ReqFunctional]
-GSML(G? State Machine Library) is to provide state control for components, e.g., button, LED.
+#### 5.1.3. Events
+- SML shall define abstract events for applications.
+- SML shall notify events to applications, during state control.
+- Event extraction shall be done by applications with callback function.
 
-[SyRS_xxx][ReqFunctional]
-GSML is platform independent library written in portable language, C.
-
-[SyRS_xxx][Heading]
-### Concept
-
-[SyRS_xxx][ReqFunctional]
-It could be a common story that components with the same state control, e.g, buttons, LEDs.
-GSML shall play a relay role between driver, e.g., button, LEDs, periodic ISR, and application.
-GSML shall provide a general state machine for each component.
-Device specific configuration should 
-
-[SyRS_xxx][ReqFunctional]
-GSML is composed of modules below.
-- GSML_COMMON
-- GSML_Template
-- GSML_Button
-- GSML_XXX
-
-[SyRS_xxx][ReqFunctional]
-GSML_COMMON shall define and implement common features below.
-- Enum type of state functions, i.e., entry, do, exit.
-- Debug feature to evaluate GSML through serial communication, etc.
-
-[SyRS_xxx][ReqFunctional]
-GSML_Template shall provide template code to use GSML.
-
-[SyRS_xxx][ReqInformation]
-Code generation for GSML shall be defined as a futher feature.
-
-[SyRS_xxx][ReqFunctional]
-GSML is composed of GSML_xxx, e.g, GSML_Button, GSML_Led.
-
-
-
-[SyRS_010][ReqFunctional]
-NPA shall define button states below
-- STT_BTN_RELEASED
-- STT_BTN_PRESSED
-
-[SyRS_011][ReqFunctional]
-NPA shall monitor button state and notify events below.
-- EVT_BTN_SINGLE : Button is pressed for less than 1 second and released.
-- EVT_BTN_PET1S : Button is pressed for 1 second and still pressed.
-- EVT_BTN_PET2S : Button is pressed for 2 second and still pressed.
-- EVT_BTN_PET3S : Button is pressed for 3 second and still pressed.
-
-[SyRS_012][ReqFunctional]
-NPA shall implement hysteresis, i.e., repeated 5 times in a row, both states of pressed and released.
-
-[SyRS_013][ReqFunctional]
-NPA shall respond every 1ms.
-
-[SyRS_0xx][Heading]
-# LED Control
-
-[SyRS_0xx][ReqFunctional]
-NPA shall define LEDs below.
-- STT_LED_OFF
-- STT_LED_FADE_IN
-- STT_LED_FADE_OFF
-- STT_LED_ON
-
-[SyRS_0xx][ReqFunctional]
-NPA shall fade in LEDs when LED state is off and EVT_BTN_SINGLE is invoked.
-
-[SyRS_0xx][ReqFunctional]
-NPA shall fade off LEDs when LED state is on and EVT_BTN_SINGLE is invoked.
-
-[SyRS_0xx][ReqFunctional]
-NPA shall fade in LEDs for 500ms.
-
-[SyRS_0xx][ReqFunctional]
-NPA shall fade out LEDs for 800ms.
-
-
+### 5.2. 
 
