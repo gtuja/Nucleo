@@ -2,19 +2,19 @@
 # Overview
 
 [SyRS_002][ReqInformation]
-NPA(Nucleo Playground Application) is an application that provides control features for components, e.g.,buttons, LEDs.
+NPA(Nucleo Playground Application) is a collection of application with nucleo evaluation boards for self-improvement.
 
 [SyRS_003][Heading]
 # Environment
 
 [SyRS_004][ReqFunctional]
-NPA shall run on the EVB(Evaluation Board), e.g., nucleo-f429ZI.
-
-[SyRS_005][ReqFunctional]
-NPA shall be implemented with CubeIDE version 1.51 provided by ST.
+NPA shall run on the STM(ST microcontroller), e.g., nucleo-f429ZI.
+NPA shall be implemented with CubeIDE version 1.51 provided by STM.
+Feature specific restrictions, e.g., clock, ROM, RAM, shall be defined during evaluation phase.
 
 [SyRS_007][Heading]
 # Features
+## NBB
 
 [SyRS_xxx][Heading]
 ## GSML
