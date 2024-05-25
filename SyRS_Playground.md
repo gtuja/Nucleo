@@ -1,18 +1,21 @@
-[SyRS_001][Heading]
-# Overview
 
-[SyRS_002][ReqInformation]
-NPA(Nucleo Playground Application) is a collection of application with nucleo evaluation boards for self-improvement.
+# List of abbreviation
+- NPL Nucleo Playground Library
+- NPA Nucleo Playground Application
 
-[SyRS_003][Heading]
-# Environment
+# 1. preface
+NPL is a collection of C libraries for self-improvement using STM.
+NPA is a collection of C applications run on STM.
+NPA shall evaluate NPL and might play a role as a template application using NPL.
 
-[SyRS_004][ReqFunctional]
-NPA shall run on the STM(ST microcontroller), e.g., nucleo-f429ZI.
+# 2. Environment
+NPA shall run on the STM, e.g., nucleo-f429ZI, 
 NPA shall be implemented with CubeIDE version 1.51 provided by STM.
+
+# 3. Restrictions
 Feature specific restrictions, e.g., clock, ROM, RAM, shall be defined during evaluation phase.
 
-[SyRS_007][Heading]
+# 4. 
 # Features
 ## NBB
 
