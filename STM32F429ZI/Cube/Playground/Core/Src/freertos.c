@@ -25,7 +25,11 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include <stdio.h>
+#include "Task/TaskButton.h"
+#include "Task/TaskLed.h"
+#include "Task/TaskSwd.h"
+#include "Service/ServicePeriodic.h"
+#include "Tool/ToolSwd.h"
 
 /* USER CODE END Includes */
 
@@ -46,8 +50,7 @@
 
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN Variables */
-uint32_t gulTickCounter;
-uint32_t gulTaskBtnCounter;
+static uint32_t gulTickCounter;
 
 /* USER CODE END Variables */
 /* Definitions for TSK_BUTTON */
@@ -71,10 +74,10 @@ const osThreadAttr_t TSK_SWD_attributes = {
   .stack_size = 1024 * 4,
   .priority = (osPriority_t) osPriorityLow,
 };
-/* Definitions for SemStatusButton */
-osSemaphoreId_t SemStatusButtonHandle;
-const osSemaphoreAttr_t SemStatusButton_attributes = {
-  .name = "SemStatusButton"
+/* Definitions for QueSwd */
+osMessageQueueId_t QueSwdHandle;
+const osMessageQueueAttr_t QueSwd_attributes = {
+  .name = "QueSwd"
 };
 
 /* Private function prototypes -----------------------------------------------*/
@@ -115,8 +118,20 @@ void vApplicationTickHook( void )
    added here, but the tick hook is called from an interrupt context, so
    code must not attempt to block, and only the interrupt safe FreeRTOS API
    functions can be used (those that end in FromISR()). */
+  uint8_t i;
 
+  for (i=0; i<SRV_PRD_MAX; i++)
+  {
+    if (gulTickCounter % gstSrvPrdTbl[i].u32Period == 0)
+    {
+      if (gstSrvPrdTbl[i].pfService != NULL)
+      {
+        gstSrvPrdTbl[i].pfService(NULL);
+      }
+    }
+  }
   gulTickCounter++;
+
 }
 /* USER CODE END 3 */
 
@@ -127,6 +142,8 @@ void vApplicationTickHook( void )
   */
 void MX_FREERTOS_Init(void) {
   /* USER CODE BEGIN Init */
+  vSrvPrdInitialize();
+  vToolSwdInitialize();
   gulTickCounter = 0;
 
   /* USER CODE END Init */
@@ -135,10 +152,6 @@ void MX_FREERTOS_Init(void) {
   /* add mutexes, ... */
   /* USER CODE END RTOS_MUTEX */
 
-  /* Create the semaphores(s) */
-  /* creation of SemStatusButton */
-  SemStatusButtonHandle = osSemaphoreNew(1, 0, &SemStatusButton_attributes);
-
   /* USER CODE BEGIN RTOS_SEMAPHORES */
   /* add semaphores, ... */
   /* USER CODE END RTOS_SEMAPHORES */
@@ -146,6 +159,10 @@ void MX_FREERTOS_Init(void) {
   /* USER CODE BEGIN RTOS_TIMERS */
   /* start timers, add new ones, ... */
   /* USER CODE END RTOS_TIMERS */
+
+  /* Create the queue(s) */
+  /* creation of QueSwd */
+  QueSwdHandle = osMessageQueueNew (16, sizeof(uint8_t), &QueSwd_attributes);
 
   /* USER CODE BEGIN RTOS_QUEUES */
   /* add queues, ... */
@@ -181,17 +198,13 @@ void MX_FREERTOS_Init(void) {
 void TaskButton(void *argument)
 {
   /* USER CODE BEGIN TaskButton */
-  gulTaskBtnCounter = 0;
+  vTaskButtonInitialize();
 
   /* Infinite loop */
   for(;;)
   {
-    if (gulTaskBtnCounter % 1000 == 0)
-    {
-      printf("%ld\r\n", gulTaskBtnCounter);
-    }
-    gulTaskBtnCounter++;
-    osDelay(1);
+    vTaskButtonProcess();
+    osDelay(1000);
   }
   /* USER CODE END TaskButton */
 }
@@ -206,10 +219,13 @@ void TaskButton(void *argument)
 void TaskLed(void *argument)
 {
   /* USER CODE BEGIN TaskLed */
+  vTaskLedInitialize();
+
   /* Infinite loop */
   for(;;)
   {
-    osDelay(1);
+    vTaskLedProcess();
+    osDelay(1000);
   }
   /* USER CODE END TaskLed */
 }
@@ -224,9 +240,12 @@ void TaskLed(void *argument)
 void TaskSwd(void *argument)
 {
   /* USER CODE BEGIN TaskSwd */
+  vTaskSwdInitialize();
+
   /* Infinite loop */
   for(;;)
   {
+    vTaskSwdProcess();
     osDelay(1);
   }
   /* USER CODE END TaskSwd */
