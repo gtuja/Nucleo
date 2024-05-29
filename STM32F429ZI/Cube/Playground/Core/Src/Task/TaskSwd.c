@@ -40,7 +40,7 @@ void vTaskSwdProcess(void)
   xStatus = xQueueReceive(QueSwdHandle, &u8Received, portMAX_DELAY);
   if (xStatus == pdPASS)
   {
-    printf("[%03d]%s\r\n", u8Received, gpcSwdBuffer[u8Received]);
+    printf("[%03d] %s\r\n", u8Received, gpcSwdBuffer[u8Received]);
   }
 }
 

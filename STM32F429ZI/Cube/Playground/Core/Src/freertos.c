@@ -25,10 +25,12 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "Service/ServicePeriodic.h"
+#include "Service/ServiceRtc.h"
 #include "Task/TaskButton.h"
 #include "Task/TaskLed.h"
 #include "Task/TaskSwd.h"
-#include "Service/ServicePeriodic.h"
+#include "Task/TaskRtc.h"
 #include "Tool/ToolSwd.h"
 
 /* USER CODE END Includes */
@@ -74,10 +76,22 @@ const osThreadAttr_t TSK_SWD_attributes = {
   .stack_size = 1024 * 4,
   .priority = (osPriority_t) osPriorityLow,
 };
+/* Definitions for TSK_RTC */
+osThreadId_t TSK_RTCHandle;
+const osThreadAttr_t TSK_RTC_attributes = {
+  .name = "TSK_RTC",
+  .stack_size = 256 * 4,
+  .priority = (osPriority_t) osPriorityNormal,
+};
 /* Definitions for QueSwd */
 osMessageQueueId_t QueSwdHandle;
 const osMessageQueueAttr_t QueSwd_attributes = {
   .name = "QueSwd"
+};
+/* Definitions for QueRtc */
+osMessageQueueId_t QueRtcHandle;
+const osMessageQueueAttr_t QueRtc_attributes = {
+  .name = "QueRtc"
 };
 
 /* Private function prototypes -----------------------------------------------*/
@@ -88,6 +102,7 @@ const osMessageQueueAttr_t QueSwd_attributes = {
 void TaskButton(void *argument);
 void TaskLed(void *argument);
 void TaskSwd(void *argument);
+void TaskRtc(void *argument);
 
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
@@ -164,6 +179,9 @@ void MX_FREERTOS_Init(void) {
   /* creation of QueSwd */
   QueSwdHandle = osMessageQueueNew (16, sizeof(uint8_t), &QueSwd_attributes);
 
+  /* creation of QueRtc */
+  QueRtcHandle = osMessageQueueNew (4, sizeof(sttRtcDateTime), &QueRtc_attributes);
+
   /* USER CODE BEGIN RTOS_QUEUES */
   /* add queues, ... */
   /* USER CODE END RTOS_QUEUES */
@@ -177,6 +195,9 @@ void MX_FREERTOS_Init(void) {
 
   /* creation of TSK_SWD */
   TSK_SWDHandle = osThreadNew(TaskSwd, NULL, &TSK_SWD_attributes);
+
+  /* creation of TSK_RTC */
+  TSK_RTCHandle = osThreadNew(TaskRtc, NULL, &TSK_RTC_attributes);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -246,9 +267,27 @@ void TaskSwd(void *argument)
   for(;;)
   {
     vTaskSwdProcess();
-    osDelay(1);
   }
   /* USER CODE END TaskSwd */
+}
+
+/* USER CODE BEGIN Header_TaskRtc */
+/**
+* @brief Function implementing the TSK_RTC thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_TaskRtc */
+void TaskRtc(void *argument)
+{
+  /* USER CODE BEGIN TaskRtc */
+  vTaskRtcInitialize();
+  /* Infinite loop */
+  for(;;)
+  {
+    vTaskRtcProcess();
+  }
+  /* USER CODE END TaskRtc */
 }
 
 /* Private application code --------------------------------------------------*/

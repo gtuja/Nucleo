@@ -1,7 +1,7 @@
 
 /**
   ******************************************************************************
-  * @file           : ServiceRtc.c
+  * @file           : TaskRtc.c
   * @brief          : Header/Source for XXXX.
   *                   This file contains interfaces/methods of XXXX.
   ******************************************************************************
@@ -13,11 +13,13 @@
   */
 
 /* Includes ------------------------------------------------------------------*/
-#include "stm32f4xx_hal.h"
 #include "common.h"
 #include "feature.h"
+#include "rtc.h"
 #include "queue.h"
 #include "Service/ServiceRtc.h"
+#include "Task/TaskRtc.h"
+#include "Tool/ToolSwd.h"
 
 /* Private define ------------------------------------------------------------*/
 
@@ -29,27 +31,25 @@
 
 /* Private function prototypes -----------------------------------------------*/
 
-/* Override callback functions  ----------------------------------------------*/
-
-/**
-  * @brief  Wakeup Timer callback.
-  * @param  hrtc pointer to a RTC_HandleTypeDef structure that contains
-  *                the configuration information for RTC.
-  * @retval None
-  */
-void HAL_RTCEx_WakeUpTimerEventCallback(RTC_HandleTypeDef *hrtc)
+PUBLIC void vTaskRtcInitialize(void)
 {
-  /* NOTE: This function should not be modified, when the callback is needed,
-           the HAL_RTCEx_WakeUpTimerEventCallback could be implemented in the user file
-   */
-  RTC_TimeTypeDef sTime;
-  RTC_DateTypeDef sDate;
-  sttRtcDateTime sttDateTime;
+}
 
-  HAL_RTC_GetTime(hrtc, &sTime, RTC_FORMAT_BIN);
-  HAL_RTC_GetDate(hrtc, &sDate, RTC_FORMAT_BIN);
+PUBLIC void vTaskRtcProcess(void)
+{
+  BaseType_t xStatus;
+  sttRtcDateTime sttReceived;
 
-  sttDateTime.Date = sDate;
-  sttDateTime.Time = sTime;
-  xQueueSendFromISR(QueRtcHandle, &sttDateTime, NULL);
+  xStatus = xQueueReceive(QueRtcHandle, &sttReceived, portMAX_DELAY);
+  if (xStatus == pdPASS)
+  {
+    SWD_PRINTF("20%02d.%02d.%02d %02d:%02d:%02d",
+        sttReceived.Date.Year,
+        sttReceived.Date.Month,
+        sttReceived.Date.Date,
+        sttReceived.Time.Hours,
+        sttReceived.Time.Minutes,
+        sttReceived.Time.Seconds
+        );
+  }
 }

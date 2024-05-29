@@ -1,7 +1,7 @@
 
 /**
   ******************************************************************************
-  * @file           : ServiceRtc.h
+  * @file           : TaskRtc.h
   * @brief          : Header/Source for XXXX.
   *                   This file contains interfaces/methods of XXXX.
   ******************************************************************************
@@ -12,8 +12,8 @@
   ******************************************************************************
   */
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef INC_SERVICE_SERVICERTC_H_
-#define INC_SERVICE_SERVICERTC_H_
+#ifndef INC_TASK_TASKRTC_H_
+#define INC_TASK_TASKRTC_H_
 
 #ifdef __cplusplus
 extern "C" {
@@ -24,23 +24,17 @@ extern "C" {
 /* Exported defines ----------------------------------------------------------*/
 
 /* Exported types ------------------------------------------------------------*/
-typedef struct
-{
-  RTC_DateTypeDef Date;
-  RTC_TimeTypeDef Time;
-} sttRtcDateTime;
 
 /* Exported constants --------------------------------------------------------*/
 
 /* Exported macro ------------------------------------------------------------*/
 
 /* Exported functions prototypes ---------------------------------------------*/
-
-/* Exported variables --------------------------------------------------------*/
-extern osMessageQueueId_t QueRtcHandle;
+PUBLIC void vTaskRtcInitialize(void);
+PUBLIC void vTaskRtcProcess(void);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* INC_SERVICE_SERVICERTC_H_ */
+#endif /* INC_TASK_TASKRTC_H_ */

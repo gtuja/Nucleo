@@ -48,12 +48,12 @@ PUBLIC void vSrvPrdInitialize()
 PRIVATE void SrvPrdButton(void* pvArgs)
 {
   u32SrvButtonCounter++;
-  if (u32SrvButtonCounter % 1000 == 0) SWD_PRINTF_ISR("%s:%d is called on...", __FUNCTION__, __LINE__);
+//  if (u32SrvButtonCounter % 1000 == 0) SWD_PRINTF_ISR("%s:%d is called on...", __FUNCTION__, __LINE__);
 }
 
 PRIVATE void SrvPrdLed(void* pvArgs)
 {
   u32SrvLedCounter++;
-  if (u32SrvButtonCounter % 2000 == 0) SWD_PRINTF_ISR("%s:%d is called on...", __FUNCTION__, __LINE__);
+//  if (u32SrvButtonCounter % 2000 == 0) SWD_PRINTF_ISR("%s:%d is called on...", __FUNCTION__, __LINE__);
 }
 
