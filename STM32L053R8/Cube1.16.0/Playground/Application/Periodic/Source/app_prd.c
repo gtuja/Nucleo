@@ -7,11 +7,11 @@
  */
 
 /* Includes ------------------------------------------------------------------*/
-#include <asys_prd.h>
 #include "type.h"
 #include "feature.h"
 #include "stm32l0xx_hal.h"
 #include <string.h>
+#include "../Include/app_prd.h"
 
 /* Private define ------------------------------------------------------------*/
 /* Private typedef -----------------------------------------------------------*/
@@ -41,6 +41,8 @@ PUBLIC void vidAprdInitialize(void) {
 }
 
 PUBLIC void vidAprdService(void) {
+  gullAprdCounter++;
+
   if ((gullAprdCounter % APRD_INTERVAL_LOW) == (U64)0)    vidAprdServiceDetail(APRD_PRIOR_LOW);
   if ((gullAprdCounter % APRD_INTERVAL_NORMAL) == (U64)0) vidAprdServiceDetail(APRD_PRIOR_NORMAL);
   if ((gullAprdCounter % APRD_INTERVAL_HIGH) == (U64)0)   vidAprdServiceDetail(APRD_PRIOR_HIGH);
@@ -61,14 +63,6 @@ PUBLIC BOOL bAprdRegister(tenuAprdPriority enuPriority, tpfAprdInitialize pfInit
     }
   }
   return bReturn;
-}
-
-PUBLIC void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
-{
-  if (htim == &htim21) {
-    gullAprdCounter++;
-    vidAprdService();
-  }
 }
 
 PRIVATE void vidAprdServiceDetail(tenuAprdPriority enuAprdPriority) {

@@ -16,4 +16,7 @@
 /* Exported constants --------------------------------------------------------*/
 /* Exported functions prototypes ---------------------------------------------*/
 
+extern void vidAprdInitialize(void);
+extern void vidAprdService(void);
+
 #endif /* INCLUDE_APP_API_H_ */
