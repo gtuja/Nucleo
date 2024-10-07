@@ -1,5 +1,5 @@
 /**
- * @file    app_prd.h
+ * @file    asys_prd.h
  * @brief   This file is used to ... 
  * @author  Gtuja
  * @date    Oct 7, 2024
@@ -7,8 +7,8 @@
  */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef SYSTEM_INCLUDE_APP_PRD_H_
-#define SYSTEM_INCLUDE_APP_PRD_H_
+#ifndef SYSTEM_INCLUDE_ASYS_PRD_H_
+#define SYSTEM_INCLUDE_ASYS_PRD_H_
 
 /* Includes ------------------------------------------------------------------*/
 #include "type.h"
@@ -38,4 +38,4 @@ EXTERN void vidAprdInitialize(void);
 EXTERN void vidAprdService(void);
 EXTERN BOOL bAprdRegister(tenuAprdPriority enuPriority, tpfAprdInitialize pfInitialize, tpfAprdService pfService);
 
-#endif /* SYSTEM_INCLUDE_APP_PRD_H_ */
+#endif /* SYSTEM_INCLUDE_ASYS_PRD_H_ */
